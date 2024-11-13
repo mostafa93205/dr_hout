@@ -207,18 +207,20 @@
 
         function updateCertificates() {
             const certificates = [
-                {en: 'Digital Marketing: Misr University for Science and Technology (MUST), 2024', ar: 'التسويق الرقمي: جامعة مصر للعلوم والتكنولوجيا (MUST)، 2024'},
-                {en: 'ISO 45001/2018: Occupational Safety and Health Management System', ar: 'ISO 45001/2018: نظام إدارة السلامة والصحة المهنية'},
                 {en: 'Data Science: Completion Certificate from Moka Satar', ar: 'علوم البيانات: شهادة إتمام من موكا سطر'},
                 {en: 'Python 101: Completion Certificate from Moka Satar', ar: 'بايثون 101: شهادة إتمام من موكا سطر'},
+                {en: 'Digital Marketing: Misr University for Science and Technology (MUST), 2024', ar: 'التسويق الرقمي: جامعة مصر للعلوم والتكنولوجيا (MUST)، 2024'},
+                {en: 'ISO 45001/2018: Occupational Safety and Health Management System', ar: 'ISO 45001/2018: نظام إدارة السلامة والصحة المهنية'},
                 {en: 'Body Language & Business Etiquette: Almentor platform', ar: 'لغة الجسد وآداب العمل: منصة المنتور'},
                 {en: 'Attendance Certificate at Third International Biotechnology Conference, Mast University', ar: 'شهادة حضور المؤتمر الدولي الثالث للتكنولوجيا الحيوية، جامعة ماست'}
             ];
             const certificatesList = document.getElementById('certificatesList');
             certificatesList.innerHTML = '';
-            certificates.forEach(cert => {
+            certificatesList.className = 'max-w-2xl mx-auto space-y-4 list-disc list-inside';
+            certificates.forEach((cert, index) => {
                 const li = document.createElement('li');
-                li.textContent = isEnglish ? cert.en : cert.ar;
+                li.textContent = (isEnglish ? cert.en : cert.ar);
+                li.className = 'mb-2'; // Add some margin for better readability
                 certificatesList.appendChild(li);
             });
         }
