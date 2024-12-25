@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mostafa Emad Salah Hamdy - Personal Website</title>
+    <title>Mostafa Emad Salah Hamdy - Personal Page</title>
+    <link rel="icon" href="your-favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+
         body {
             font-family: 'Merriweather', serif;
         }
+
         .bg-cream {
             background-color: #f5e6d3;
         }
-        .dark .bg-cream {
-            background-color: #1a202c;
-        }
+
         .animate-bounce {
             animation: bounce 1s infinite;
         }
+
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(-25%);
@@ -42,45 +44,47 @@
         </div>
     </nav>
 
-    <main class="container mx-auto px-6 py-12 space-y-24 pt-24">
-        <section id="personalInfo">
+    <header class="pt-24 pb-16 text-center">
+        <div class="container mx-auto px-6">
+            <img src="your-photo.jpg?height=150&width=150" alt="Mostafa Emad" class="w-40 h-40 mx-auto rounded-full border-4 border-current mb-6 transition-all duration-300 hover:scale-105">
+            <h1 class="text-4xl font-bold mb-2" id="fullName">Mostafa Emad Salah Hamdy</h1>
+            <p class="text-xl mb-6" id="tagline">Passionate about Programming and Gaming</p>
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-bounce" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 space-y-24">
+        <section>
             <h2 class="text-3xl font-bold mb-6 text-center" id="personalInfoTitle">Personal Information</h2>
             <div class="max-w-2xl mx-auto space-y-4 text-center">
-                <p><strong id="nameLabel">Name:</strong> <span id="nameValue">Mostafa Emad Salah Hamdy</span></p>
                 <p><strong id="ageLabel">Age:</strong> <span id="ageValue"></span></p>
                 <p><strong id="nationalityLabel">Nationality:</strong> <span id="nationalityValue">Egyptian</span></p>
                 <p><strong id="emailLabel">Email:</strong> mommm2005@gmail.com</p>
-                <p><strong id="positionLabel">Current Position:</strong> <span id="positionValue">Head of Social Activity and Trips Committee, Student Union</span></p>
             </div>
         </section>
 
-        <section id="skills">
+        <section>
             <h2 class="text-3xl font-bold mb-6 text-center" id="skillsTitle">Skills</h2>
-            <div class="flex flex-wrap justify-center gap-4" id="skillsList"></div>
+            <div class="flex flex-wrap justify-center gap-4" id="skillsList">
+                <!-- Skills will be dynamically added here -->
+            </div>
         </section>
 
-        <section id="qualifications">
-            <h2 class="text-3xl font-bold mb-6 text-center" id="qualificationsTitle">Qualifications and Certificates</h2>
-            <ul class="max-w-2xl mx-auto space-y-4 list-disc list-inside" id="certificatesList"></ul>
+        <section>
+            <h2 class="text-3xl font-bold mb-6 text-center" id="certificatesTitle">Qualifications and Certificates</h2>
+            <ul class="max-w-2xl mx-auto space-y-4 list-disc list-inside" id="certificatesList">
+                <!-- Certificates will be dynamically added here -->
+            </ul>
         </section>
 
-        <section id="education">
+        <section>
             <h2 class="text-3xl font-bold mb-6 text-center" id="educationTitle">Education</h2>
-            <p id="facultyInfo" class="mb-2">Faculty of Health Sciences - Health Administration & Informatics</p>
-            <p id="positionInfo" class="font-semibold mb-2">Head of Social Activity and Trips Committee, Student Union</p>
-            <button 
-                onclick="toggleEducationDetails()"
-                class="text-blue-600 hover:underline focus:outline-none transition-colors duration-300"
-                id="educationToggle"
-            >
-                Learn More
-            </button>
-            <p id="educationDetails" class="mt-2 text-sm hidden">
-                Responsible for organizing and managing social events and trips for students, enhancing campus life and student engagement.
-            </p>
+            <p class="text-center" id="educationInfo">Faculty of Health Sciences - Health Administration & Informatics</p>
         </section>
 
-        <section id="socialMedia">
+        <section>
             <h2 class="text-3xl font-bold mb-6 text-center" id="socialMediaTitle">Social Media</h2>
             <div class="flex justify-center space-x-6">
                 <a href="https://www.facebook.com/mommm93205" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-110">
@@ -154,23 +158,13 @@
         function updateTheme() {
             const body = document.body;
             if (isDarkMode) {
-                body.classList.add('dark');
+                body.classList.remove('bg-cream', 'text-gray-800');
+                body.classList.add('bg-gray-900', 'text-gray-100');
                 document.getElementById('darkModeToggle').textContent = '☀️';
             } else {
-                body.classList.remove('dark');
+                body.classList.remove('bg-gray-900', 'text-gray-100');
+                body.classList.add('bg-cream', 'text-gray-800');
                 document.getElementById('darkModeToggle').textContent = '🌙';
-            }
-        }
-
-        function toggleEducationDetails() {
-            const details = document.getElementById('educationDetails');
-            const toggle = document.getElementById('educationToggle');
-            if (details.classList.contains('hidden')) {
-                details.classList.remove('hidden');
-                toggle.textContent = isEnglish ? 'Show Less' : 'عرض أقل';
-            } else {
-                details.classList.add('hidden');
-                toggle.textContent = isEnglish ? 'Learn More' : 'اعرف المزيد';
             }
         }
 
@@ -179,24 +173,17 @@
             langToggle.textContent = isEnglish ? 'عربي' : 'English';
 
             document.getElementById('navTitle').textContent = isEnglish ? 'Dr Hout' : 'د. حوت';
+            document.getElementById('fullName').textContent = isEnglish ? 'Mostafa Emad Salah Hamdy' : 'مصطفى عماد صلاح حمدي';
+            document.getElementById('tagline').textContent = isEnglish ? 'Passionate about Programming and Gaming' : 'شغوف بالبرمجة والألعاب';
             document.getElementById('personalInfoTitle').textContent = isEnglish ? 'Personal Information' : 'المعلومات الشخصية';
-            document.getElementById('nameLabel').textContent = isEnglish ? 'Name:' : 'الاسم:';
-            document.getElementById('nameValue').textContent = isEnglish ? 'Mostafa Emad Salah Hamdy' : 'مصطفى عماد صلاح حمدي';
             document.getElementById('ageLabel').textContent = isEnglish ? 'Age:' : 'العمر:';
             document.getElementById('nationalityLabel').textContent = isEnglish ? 'Nationality:' : 'الجنسية:';
             document.getElementById('nationalityValue').textContent = isEnglish ? 'Egyptian' : 'مصري';
             document.getElementById('emailLabel').textContent = isEnglish ? 'Email:' : 'البريد الإلكتروني:';
-            document.getElementById('positionLabel').textContent = isEnglish ? 'Current Position:' : 'المنصب الحالي:';
-            document.getElementById('positionValue').textContent = isEnglish ? 'Head of Social Activity and Trips Committee, Student Union' : 'رئيس لجنة النشاط الاجتماعي والرحلات، اتحاد الطلاب';
             document.getElementById('skillsTitle').textContent = isEnglish ? 'Skills' : 'المهارات';
-            document.getElementById('qualificationsTitle').textContent = isEnglish ? 'Qualifications and Certificates' : 'المؤهلات والشهادات';
+            document.getElementById('certificatesTitle').textContent = isEnglish ? 'Qualifications and Certificates' : 'المؤهلات والشهادات';
             document.getElementById('educationTitle').textContent = isEnglish ? 'Education' : 'التعليم';
-            document.getElementById('facultyInfo').textContent = isEnglish ? 'Faculty of Health Sciences - Health Administration & Informatics' : 'كلية العلوم الصحية - إدارة الصحة والمعلوماتية';
-            document.getElementById('positionInfo').textContent = isEnglish ? 'Head of Social Activity and Trips Committee, Student Union' : 'رئيس لجنة النشاط الاجتماعي والرحلات، اتحاد الطلاب';
-            document.getElementById('educationToggle').textContent = isEnglish ? 'Learn More' : 'اعرف المزيد';
-            document.getElementById('educationDetails').textContent = isEnglish 
-                ? 'Responsible for organizing and managing social events and trips for students, enhancing campus life and student engagement.'
-                : 'مسؤول عن تنظيم وإدارة الفعاليات الاجتماعية والرحلات للطلاب، وتعزيز الحياة الجامعية ومشاركة الطلاب.';
+            document.getElementById('educationInfo').textContent = isEnglish ? 'Faculty of Health Sciences - Health Administration & Informatics' : 'كلية العلوم الصحية - إدارة الصحة والمعلوماتية';
             document.getElementById('socialMediaTitle').textContent = isEnglish ? 'Social Media' : 'وسائل التواصل الاجتماعي';
             document.getElementById('footerText').textContent = isEnglish ? '© 2024 Mostafa Emad Salah Hamdy. All rights reserved.' : '© 2024 مصطفى عماد صلاح حمدي. جميع الحقوق محفوظة.';
 
@@ -225,16 +212,15 @@
                 {en: 'Digital Marketing: Misr University for Science and Technology (MUST), 2024', ar: 'التسويق الرقمي: جامعة مصر للعلوم والتكنولوجيا (MUST)، 2024'},
                 {en: 'ISO 45001/2018: Occupational Safety and Health Management System', ar: 'ISO 45001/2018: نظام إدارة السلامة والصحة المهنية'},
                 {en: 'Body Language & Business Etiquette: Almentor platform', ar: 'لغة الجسد وآداب العمل: منصة المنتور'},
-                {en: 'Attendance Certificate at Third International Biotechnology Conference, Mast University', ar: 'شهادة حضور المؤتمر الدولي الثالث للتكنولوجيا الحيوية، جامعة ماست'},
-                {en: 'Certificate of Appreciation for organizing the Scientific Day for the Medical Analysis Technology Department', ar: 'شهادة تقدير لتنظيم اليوم العلمي لقسم تكنولوجيا التحليل الطبي'},
-                {en: 'Infection Control Course Certificate from the Saudi Public Health Authority', ar: 'شهادة دورة التحكم في العدوى من هيئة الصحة العامة السعودية'}
+                {en: 'Attendance Certificate at Third International Biotechnology Conference, Mast University', ar: 'شهادة حضور المؤتمر الدولي الثالث للتكنولوجيا الحيوية، جامعة ماست'}
             ];
             const certificatesList = document.getElementById('certificatesList');
             certificatesList.innerHTML = '';
-            certificates.forEach(cert => {
+            certificatesList.className = 'max-w-2xl mx-auto space-y-4 list-disc list-inside';
+            certificates.forEach((cert, index) => {
                 const li = document.createElement('li');
-                li.textContent = isEnglish ? cert.en : cert.ar;
-                li.className = 'mb-2';
+                li.textContent = (isEnglish ? cert.en : cert.ar);
+                li.className = 'mb-2'; // Add some margin for better readability
                 certificatesList.appendChild(li);
             });
         }
@@ -242,28 +228,7 @@
         // Initial setup
         setAge();
         updateContent();
-            document.getElementById('navTitle').textContent = isEnglish ? 'د. حوت' : 'Dr Hout';
-            document.getElementById('personalInfoTitle').textContent = isEnglish ? 'المعلومات الشخصية' : 'Personal Information';
-            document.getElementById('nameLabel').textContent = isEnglish ? 'الاسم:' : 'Name:';
-            document.getElementById('nameValue').textContent = isEnglish ? 'مصطفى عماد صلاح حمدي' : 'Mostafa Emad Salah Hamdy';
-            document.getElementById('ageLabel').textContent = isEnglish ? 'العمر:' : 'Age:';
-            document.getElementById('nationalityLabel').textContent = isEnglish ? 'الجنسية:' : 'Nationality:';
-            document.getElementById('nationalityValue').textContent = isEnglish ? 'مصري' : 'Egyptian';
-            document.getElementById('emailLabel').textContent = isEnglish ? 'البريد الإلكتروني:' : 'Email:';
-            document.getElementById('positionLabel').textContent = isEnglish ? 'المنصب الحالي:' : 'Current Position:';
-            document.getElementById('positionValue').textContent = isEnglish ? 'رئيس لجنة النشاط الاجتماعي والرحلات، اتحاد الطلاب' : 'Head of Social Activity and Trips Committee, Student Union';
-            document.getElementById('skillsTitle').textContent = isEnglish ? 'المهارات' : 'Skills';
-            document.getElementById('qualificationsTitle').textContent = isEnglish ? 'المؤهلات والشهادات' : 'Qualifications and Certificates';
-            document.getElementById('educationTitle').textContent = isEnglish ? 'التعليم' : 'Education';
-            document.getElementById('facultyInfo').textContent = isEnglish ? 'كلية العلوم الصحية - إدارة الصحة والمعلوماتية' : 'Faculty of Health Sciences - Health Administration & Informatics';
-            document.getElementById('positionInfo').textContent = isEnglish ? 'رئيس لجنة النشاط الاجتماعي والرحلات' : 'Head of Social Activity and Trips Committee, Student Union';
-            document.getElementById('educationToggle').textContent = isEnglish ? 'اعرف المزيد' : 'Learn More';
-            document.getElementById('socialMediaTitle').textContent = isEnglish ? 'وسائل التواصل الاجتماعي' : 'Social Media';
-            document.getElementById('footerText').textContent = isEnglish ? '© 2024 مصطفى عماد صلاح حمدي. كل الحقوق محفوظة.' : '© 2024 Mostafa Emad Salah Hamdy. All rights reserved.';
-        }
-
-        setAge();
-        updateContent();
+        updateTheme();
     </script>
 </body>
 </html>
