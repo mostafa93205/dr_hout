@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mostafa Emad Salah Hamdy - Personal Page</title>
-    <link rel="icon" href="your-favicon.ico" type="image/x-icon">
+    <title>مصطفى عماد صلاح حمدي - الموقع الشخصي</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
-
         body {
             font-family: 'Merriweather', serif;
         }
-
         .bg-cream {
             background-color: #f5e6d3;
         }
-
+        .dark .bg-cream {
+            background-color: #1a202c;
+        }
         .animate-bounce {
             animation: bounce 1s infinite;
         }
-
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(-25%);
@@ -36,62 +34,61 @@
 <body class="min-h-screen font-serif bg-cream text-gray-800 transition-colors duration-300">
     <nav class="fixed w-full bg-opacity-90 backdrop-filter backdrop-blur-sm z-10 transition-all duration-300">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <h1 class="text-2xl font-bold" id="navTitle">Dr Hout</h1>
+            <h1 class="text-2xl font-bold" id="navTitle">د. حوت</h1>
             <div class="flex items-center space-x-4">
-                <button onclick="toggleLanguage()" class="text-sm hover:underline transition-all duration-300" id="langToggle">عربي</button>
+                <button onclick="toggleLanguage()" class="text-sm hover:underline transition-all duration-300" id="langToggle">English</button>
                 <button onclick="toggleDarkMode()" class="text-sm hover:underline transition-all duration-300" id="darkModeToggle">🌙</button>
             </div>
         </div>
     </nav>
 
-    <header class="pt-24 pb-16 text-center">
-        <div class="container mx-auto px-6">
-            <img src="your-photo.jpg?height=150&width=150" alt="Mostafa Emad" class="w-40 h-40 mx-auto rounded-full border-4 border-current mb-6 transition-all duration-300 hover:scale-105">
-            <h1 class="text-4xl font-bold mb-2" id="fullName">Mostafa Emad Salah Hamdy</h1>
-            <p class="text-xl mb-6" id="tagline">Passionate about Programming and Gaming</p>
-            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-bounce" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-        </div>
-    </header>
-
-    <main class="container mx-auto px-6 py-12 space-y-24">
-        <section>
-            <h2 class="text-3xl font-bold mb-6 text-center" id="personalInfoTitle">Personal Information</h2>
+    <main class="container mx-auto px-6 py-12 space-y-24 pt-24">
+        <section id="personalInfo">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="personalInfoTitle">المعلومات الشخصية</h2>
             <div class="max-w-2xl mx-auto space-y-4 text-center">
-                <p><strong id="ageLabel">Age:</strong> <span id="ageValue"></span></p>
-                <p><strong id="nationalityLabel">Nationality:</strong> <span id="nationalityValue">Egyptian</span></p>
-                <p><strong id="emailLabel">Email:</strong> mommm2005@gmail.com</p>
+                <img src="your-photo.jpg" alt="Your Photo" class="rounded-full w-32 h-32 mx-auto mb-4">
+                <p><strong id="nameLabel">الاسم:</strong> <span id="nameValue">مصطفى عماد صلاح حمدي</span></p>
+                <p><strong id="ageLabel">العمر:</strong> <span id="ageValue"></span></p>
+                <p><strong id="nationalityLabel">الجنسية:</strong> <span id="nationalityValue">مصري</span></p>
+                <p><strong id="emailLabel">البريد الإلكتروني:</strong> mommm2005@gmail.com</p>
+                <p><strong id="positionLabel">المنصب الحالي:</strong> <span id="positionValue">رئيس لجنة النشاط الاجتماعي والرحلات 2024-2025، اتحاد الطلاب</span></p>
             </div>
         </section>
 
-        <section>
-            <h2 class="text-3xl font-bold mb-6 text-center" id="skillsTitle">Skills</h2>
-            <div class="flex flex-wrap justify-center gap-4" id="skillsList">
-                <!-- Skills will be dynamically added here -->
-            </div>
+        <section id="skills">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="skillsTitle">المهارات</h2>
+            <div class="flex flex-wrap justify-center gap-4" id="skillsList"></div>
         </section>
 
-        <section>
-            <h2 class="text-3xl font-bold mb-6 text-center" id="certificatesTitle">Qualifications and Certificates</h2>
-            <ul class="max-w-2xl mx-auto space-y-4 list-disc list-inside" id="certificatesList">
-                <!-- Certificates will be dynamically added here -->
-            </ul>
+        <section id="qualifications">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="qualificationsTitle">المؤهلات والشهادات</h2>
+            <ul class="max-w-2xl mx-auto space-y-4 list-disc list-inside" id="certificatesList"></ul>
         </section>
 
-        <section>
-            <h2 class="text-3xl font-bold mb-6 text-center" id="educationTitle">Education</h2>
-            <p class="text-center" id="educationInfo">Faculty of Health Sciences - Health Administration & Informatics</p>
+        <section id="education">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="educationTitle">التعليم</h2>
+            <p id="facultyInfo" class="mb-2">كلية العلوم الصحية - إدارة الصحة والمعلوماتية</p>
+            <p id="positionInfo" class="font-semibold mb-2">رئيس لجنة النشاط الاجتماعي والرحلات 2024-2025، اتحاد الطلاب</p>
+            <button 
+                onclick="toggleEducationDetails()"
+                class="text-blue-600 hover:underline focus:outline-none transition-colors duration-300"
+                id="educationToggle"
+            >
+                اعرف المزيد
+            </button>
+            <p id="educationDetails" class="mt-2 text-sm hidden">
+                مسؤول عن تنظيم وإدارة الأحداث الاجتماعية والرحلات للطلاب، وتعزيز حياة الحرم الجامعي ومشاركة الطلاب.
+            </p>
         </section>
 
-        <section>
-            <h2 class="text-3xl font-bold mb-6 text-center" id="socialMediaTitle">Social Media</h2>
+        <section id="socialMedia">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="socialMediaTitle">وسائل التواصل الاجتماعي</h2>
             <div class="flex justify-center space-x-6">
                 <a href="https://www.facebook.com/mommm93205" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                     </svg>
-                    <span class="sr-only">Facebook</span>
+                    <span class="sr-only">فيسبوك</span>
                 </a>
                 <a href="https://www.instagram.com/dr_hout/" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -99,7 +96,7 @@
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
-                    <span class="sr-only">Instagram</span>
+                    <span class="sr-only">إنستجرام</span>
                 </a>
                 <a href="https://www.linkedin.com/in/mostafaelhout/" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -107,25 +104,25 @@
                         <rect x="2" y="9" width="4" height="12"></rect>
                         <circle cx="4" cy="4" r="2"></circle>
                     </svg>
-                    <span class="sr-only">LinkedIn</span>
+                    <span class="sr-only">لينكدإن</span>
                 </a>
                 <a href="https://www.youtube.com/@Dr_hout" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6 0 8.6 0s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33A29 29 0 0 0 22.54 6.42z"></path>
                         <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
                     </svg>
-                    <span class="sr-only">YouTube</span>
+                    <span class="sr-only">يوتيوب</span>
                 </a>
             </div>
         </section>
     </main>
 
     <footer class="text-center py-6">
-        <p id="footerText">© 2024 Mostafa Emad Salah Hamdy. All rights reserved.</p>
+        <p id="footerText">© 2024 مصطفى عماد صلاح حمدي. كل الحقوق محفوظة.</p>
     </footer>
 
     <script>
-        let isEnglish = true;
+        let isEnglish = false;
         let isDarkMode = false;
 
         function calculateAge(birthDate) {
@@ -158,77 +155,52 @@
         function updateTheme() {
             const body = document.body;
             if (isDarkMode) {
-                body.classList.remove('bg-cream', 'text-gray-800');
-                body.classList.add('bg-gray-900', 'text-gray-100');
+                body.classList.add('dark');
                 document.getElementById('darkModeToggle').textContent = '☀️';
             } else {
-                body.classList.remove('bg-gray-900', 'text-gray-100');
-                body.classList.add('bg-cream', 'text-gray-800');
+                body.classList.remove('dark');
                 document.getElementById('darkModeToggle').textContent = '🌙';
+            }
+        }
+
+        function toggleEducationDetails() {
+            const details = document.getElementById('educationDetails');
+            const toggle = document.getElementById('educationToggle');
+            if (details.classList.contains('hidden')) {
+                details.classList.remove('hidden');
+                toggle.textContent = isEnglish ? 'Show Less' : 'عرض أقل';
+            } else {
+                details.classList.add('hidden');
+                toggle.textContent = isEnglish ? 'Learn More' : 'اعرف المزيد';
             }
         }
 
         function updateContent() {
             const langToggle = document.getElementById('langToggle');
-            langToggle.textContent = isEnglish ? 'عربي' : 'English';
+            langToggle.textContent = isEnglish ? 'English' : 'عربي';
 
-            document.getElementById('navTitle').textContent = isEnglish ? 'Dr Hout' : 'د. حوت';
-            document.getElementById('fullName').textContent = isEnglish ? 'Mostafa Emad Salah Hamdy' : 'مصطفى عماد صلاح حمدي';
-            document.getElementById('tagline').textContent = isEnglish ? 'Passionate about Programming and Gaming' : 'شغوف بالبرمجة والألعاب';
-            document.getElementById('personalInfoTitle').textContent = isEnglish ? 'Personal Information' : 'المعلومات الشخصية';
-            document.getElementById('ageLabel').textContent = isEnglish ? 'Age:' : 'العمر:';
-            document.getElementById('nationalityLabel').textContent = isEnglish ? 'Nationality:' : 'الجنسية:';
-            document.getElementById('nationalityValue').textContent = isEnglish ? 'Egyptian' : 'مصري';
-            document.getElementById('emailLabel').textContent = isEnglish ? 'Email:' : 'البريد الإلكتروني:';
-            document.getElementById('skillsTitle').textContent = isEnglish ? 'Skills' : 'المهارات';
-            document.getElementById('certificatesTitle').textContent = isEnglish ? 'Qualifications and Certificates' : 'المؤهلات والشهادات';
-            document.getElementById('educationTitle').textContent = isEnglish ? 'Education' : 'التعليم';
-            document.getElementById('educationInfo').textContent = isEnglish ? 'Faculty of Health Sciences - Health Administration & Informatics' : 'كلية العلوم الصحية - إدارة الصحة والمعلوماتية';
-            document.getElementById('socialMediaTitle').textContent = isEnglish ? 'Social Media' : 'وسائل التواصل الاجتماعي';
-            document.getElementById('footerText').textContent = isEnglish ? '© 2024 Mostafa Emad Salah Hamdy. All rights reserved.' : '© 2024 مصطفى عماد صلاح حمدي. جميع الحقوق محفوظة.';
-
-            updateSkills();
-            updateCertificates();
-
-            document.dir = isEnglish ? 'ltr' : 'rtl';
+            document.getElementById('navTitle').textContent = isEnglish ? 'د. حوت' : 'Dr Hout';
+            document.getElementById('personalInfoTitle').textContent = isEnglish ? 'المعلومات الشخصية' : 'Personal Information';
+            document.getElementById('nameLabel').textContent = isEnglish ? 'الاسم:' : 'Name:';
+            document.getElementById('nameValue').textContent = isEnglish ? 'مصطفى عماد صلاح حمدي' : 'Mostafa Emad Salah Hamdy';
+            document.getElementById('ageLabel').textContent = isEnglish ? 'العمر:' : 'Age:';
+            document.getElementById('nationalityLabel').textContent = isEnglish ? 'الجنسية:' : 'Nationality:';
+            document.getElementById('nationalityValue').textContent = isEnglish ? 'مصري' : 'Egyptian';
+            document.getElementById('emailLabel').textContent = isEnglish ? 'البريد الإلكتروني:' : 'Email:';
+            document.getElementById('positionLabel').textContent = isEnglish ? 'المنصب الحالي:' : 'Current Position:';
+            document.getElementById('positionValue').textContent = isEnglish ? 'رئيس لجنة النشاط الاجتماعي والرحلات 2024-2025، اتحاد الطلاب' : 'Head of Social Activity and Trips Committee 2024-2025, Student Union';
+            document.getElementById('skillsTitle').textContent = isEnglish ? 'المهارات' : 'Skills';
+            document.getElementById('qualificationsTitle').textContent = isEnglish ? 'المؤهلات والشهادات' : 'Qualifications and Certificates';
+            document.getElementById('educationTitle').textContent = isEnglish ? 'التعليم' : 'Education';
+            document.getElementById('facultyInfo').textContent = isEnglish ? 'كلية العلوم الصحية - إدارة الصحة والمعلوماتية' : 'Faculty of Health Sciences - Health Administration & Informatics';
+            document.getElementById('positionInfo').textContent = isEnglish ? 'رئيس لجنة النشاط الاجتماعي والرحلات 2024-2025' : 'Head of Social Activity and Trips Committee 2024-2025, Student Union';
+            document.getElementById('educationToggle').textContent = isEnglish ? 'اعرف المزيد' : 'Learn More';
+            document.getElementById('socialMediaTitle').textContent = isEnglish ? 'وسائل التواصل الاجتماعي' : 'Social Media';
+            document.getElementById('footerText').textContent = isEnglish ? '© 2024 مصطفى عماد صلاح حمدي. كل الحقوق محفوظة.' : '© 2024 Mostafa Emad Salah Hamdy. All rights reserved.';
         }
 
-        function updateSkills() {
-            const skills = ['Python', 'Data Science', 'Digital Marketing', 'Health Administration'];
-            const skillsList = document.getElementById('skillsList');
-            skillsList.innerHTML = '';
-            skills.forEach(skill => {
-                const span = document.createElement('span');
-                span.className = 'px-4 py-2 bg-opacity-20 bg-gray-500 rounded-full text-sm transition-all duration-300 hover:bg-opacity-30';
-                span.textContent = skill;
-                skillsList.appendChild(span);
-            });
-        }
-
-        function updateCertificates() {
-            const certificates = [
-                {en: 'Data Science: Completion Certificate from Moka Satar', ar: 'علوم البيانات: شهادة إتمام من موكا سطر'},
-                {en: 'Python 101: Completion Certificate from Moka Satar', ar: 'بايثون 101: شهادة إتمام من موكا سطر'},
-                {en: 'Digital Marketing: Misr University for Science and Technology (MUST), 2024', ar: 'التسويق الرقمي: جامعة مصر للعلوم والتكنولوجيا (MUST)، 2024'},
-                {en: 'ISO 45001/2018: Occupational Safety and Health Management System', ar: 'ISO 45001/2018: نظام إدارة السلامة والصحة المهنية'},
-                {en: 'Body Language & Business Etiquette: Almentor platform', ar: 'لغة الجسد وآداب العمل: منصة المنتور'},
-                {en: 'Attendance Certificate at Third International Biotechnology Conference, Mast University', ar: 'شهادة حضور المؤتمر الدولي الثالث للتكنولوجيا الحيوية، جامعة ماست'}
-            ];
-            const certificatesList = document.getElementById('certificatesList');
-            certificatesList.innerHTML = '';
-            certificatesList.className = 'max-w-2xl mx-auto space-y-4 list-disc list-inside';
-            certificates.forEach((cert, index) => {
-                const li = document.createElement('li');
-                li.textContent = (isEnglish ? cert.en : cert.ar);
-                li.className = 'mb-2'; // Add some margin for better readability
-                certificatesList.appendChild(li);
-            });
-        }
-
-        // Initial setup
         setAge();
         updateContent();
-        updateTheme();
     </script>
 </body>
 </html>
