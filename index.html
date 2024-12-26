@@ -48,7 +48,7 @@
         <div class="container mx-auto px-6">
             <img src="your-photo.jpg?height=150&width=150" alt="Mostafa Emad" class="w-40 h-40 mx-auto rounded-full border-4 border-current mb-6 transition-all duration-300 hover:scale-105">
             <h1 class="text-4xl font-bold mb-2" id="fullName">Mostafa Emad Salah Hamdy</h1>
-            <p class="text-xl mb-6" id="tagline">Passionate about Programming and Gaming</p>
+            <p class="text-xl mb-6" id="tagline">Driven by a passion for programming and management, merging creativity with technology</p>
             <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-bounce" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -62,6 +62,7 @@
                 <p><strong id="ageLabel">Age:</strong> <span id="ageValue"></span></p>
                 <p><strong id="nationalityLabel">Nationality:</strong> <span id="nationalityValue">Egyptian</span></p>
                 <p><strong id="emailLabel">Email:</strong> mommm2005@gmail.com</p>
+                <p><strong id="positionLabel">Position:</strong> <span id="positionValue">Head of Social Activities and Trips Committee 2024-2025</span></p>
             </div>
         </section>
 
@@ -174,12 +175,14 @@
 
             document.getElementById('navTitle').textContent = isEnglish ? 'Dr Hout' : 'د. حوت';
             document.getElementById('fullName').textContent = isEnglish ? 'Mostafa Emad Salah Hamdy' : 'مصطفى عماد صلاح حمدي';
-            document.getElementById('tagline').textContent = isEnglish ? 'Passionate about Programming and Gaming' : 'شغوف بالبرمجة والألعاب';
+            document.getElementById('tagline').textContent = isEnglish ? 'Driven by a passion for programming and management, merging creativity with technology' : 'مدفوع بشغف البرمجة والإدارة، يمزج بين الإبداع والتكنولوجيا';
             document.getElementById('personalInfoTitle').textContent = isEnglish ? 'Personal Information' : 'المعلومات الشخصية';
             document.getElementById('ageLabel').textContent = isEnglish ? 'Age:' : 'العمر:';
             document.getElementById('nationalityLabel').textContent = isEnglish ? 'Nationality:' : 'الجنسية:';
             document.getElementById('nationalityValue').textContent = isEnglish ? 'Egyptian' : 'مصري';
             document.getElementById('emailLabel').textContent = isEnglish ? 'Email:' : 'البريد الإلكتروني:';
+            document.getElementById('positionLabel').textContent = isEnglish ? 'Position:' : 'المنصب:';
+            document.getElementById('positionValue').textContent = isEnglish ? 'Head of Social Activities and Trips Committee 2024-2025' : 'رئيس لجنة الأنشطة الاجتماعية والرحلات 2024-2025';
             document.getElementById('skillsTitle').textContent = isEnglish ? 'Skills' : 'المهارات';
             document.getElementById('certificatesTitle').textContent = isEnglish ? 'Qualifications and Certificates' : 'المؤهلات والشهادات';
             document.getElementById('educationTitle').textContent = isEnglish ? 'Education' : 'التعليم';
@@ -212,7 +215,8 @@
                 {en: 'Digital Marketing: Misr University for Science and Technology (MUST), 2024', ar: 'التسويق الرقمي: جامعة مصر للعلوم والتكنولوجيا (MUST)، 2024'},
                 {en: 'ISO 45001/2018: Occupational Safety and Health Management System', ar: 'ISO 45001/2018: نظام إدارة السلامة والصحة المهنية'},
                 {en: 'Body Language & Business Etiquette: Almentor platform', ar: 'لغة الجسد وآداب العمل: منصة المنتور'},
-                {en: 'Attendance Certificate at Third International Biotechnology Conference, Mast University', ar: 'شهادة حضور المؤتمر الدولي الثالث للتكنولوجيا الحيوية، جامعة ماست'}
+                {en: 'Attendance Certificate at Third International Biotechnology Conference, Mast University', ar: 'شهادة حضور المؤتمر الدولي الثالث للتكنولوجيا الحيوية، جامعة ماست'},
+                {en: 'Infection Control and Prevention: Public Health Academy in Waqaya, December 18, 2024', ar: 'مكافحة العدوى والوقاية منها: أكاديمية الصحة العامة في وقاية، 18 ديسمبر 2024'}
             ];
             const certificatesList = document.getElementById('certificatesList');
             certificatesList.innerHTML = '';
@@ -232,3 +236,4 @@
     </script>
 </body>
 </html>
+
