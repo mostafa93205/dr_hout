@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostafa Emad Salah Hamdy - Personal Page</title>
+    <link rel="icon" href="your-favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Merriweather', serif;
+        }
+
+        .bg-cream {
+            background-color: #ececdf;
+        }
+
+        .bg-royal-blue {
+            background-color: #1c1268;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .fade-in-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .fade-in-delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .scale-on-hover {
+            transition: transform 0.3s ease;
+        }
+
+        .scale-on-hover:hover {
+            transform: scale(1.05);
+        }
+
+        .skill-tag {
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Scroll Animation */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(8px);
+            background-color: rgba(236, 236, 223, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .dark .nav-blur {
+            background-color: rgba(17, 24, 39, 0.8);
+        }
+    </style>
+</head>
+<body class="min-h-screen font-serif bg-cream text-gray-800 transition-all duration-300">
+    <nav class="fixed w-full nav-blur z-10">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold scale-on-hover" id="navTitle">Dr Hout</h1>
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleLanguage()" class="text-sm hover:underline transition-all duration-300" id="langToggle">عربي</button>
+                <button onclick="toggleDarkMode()" class="text-sm hover:underline transition-all duration-300" id="darkModeToggle">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-24 pb-16 text-center">
+        <div class="container mx-auto px-6">
+            <img src="your-photo.jpg?height=150&width=150" alt="Mostafa Emad" class="w-40 h-40 mx-auto rounded-full border-4 border-current mb-6 animate-float">
+            <h1 class="text-4xl font-bold mb-2 fade-in" id="fullName">Mostafa Emad Salah Hamdy</h1>
+            <p class="text-xl mb-6 fade-in fade-in-delay-1" id="tagline">Driven by a passion for programming and management, merging creativity with technology</p>
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-bounce fade-in fade-in-delay-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 space-y-24">
+        <section class="scroll-animate">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="personalInfoTitle">Personal Information</h2>
+            <div class="max-w-2xl mx-auto space-y-4 text-center">
+                <p class="scale-on-hover"><strong id="ageLabel">Age:</strong> <span id="ageValue"></span></p>
+                <p class="scale-on-hover"><strong id="nationalityLabel">Nationality:</strong> <span id="nationalityValue">Egyptian</span></p>
+                <p class="scale-on-hover"><strong id="emailLabel">Email:</strong> mommm93205@gmail.com</p>
+                <p class="scale-on-hover"><strong id="positionLabel">Position:</strong> <span id="positionValue">Head of Social Activities and Trips Committee 2024-2025, Faculty of Health Sciences Student Union</span></p>
+            </div>
+        </section>
+
+        <section class="scroll-animate">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="skillsTitle">Skills</h2>
+            <div class="flex flex-wrap justify-center gap-4" id="skillsList">
+                <!-- Skills will be dynamically added here -->
+            </div>
+        </section>
+
+        <section class="scroll-animate">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="certificatesTitle">Qualifications and Certificates</h2>
+            <ul class="max-w-2xl mx-auto space-y-4 list-disc list-inside" id="certificatesList">
+                <!-- Certificates will be dynamically added here -->
+            </ul>
+        </section>
+
+        <section class="scroll-animate">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="educationTitle">Education</h2>
+            <p class="text-center scale-on-hover" id="educationInfo">Faculty of Health Sciences - Health Administration & Informatics</p>
+        </section>
+
+        <section class="scroll-animate">
+            <h2 class="text-3xl font-bold mb-6 text-center" id="socialMediaTitle">Social Media</h2>
+            <div class="flex justify-center space-x-6">
+                <a href="https://www.facebook.com/mommm93205" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-125">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c1268" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    </svg>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://www.instagram.com/dr_hout/" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-125">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c1268" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="https://www.linkedin.com/in/mostafaelhout/" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-125">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c1268" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                    <span class="sr-only">LinkedIn</span>
+                </a>
+                <a href="https://www.youtube.com/@Dr_hout" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-125">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c1268" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                    </svg>
+                    <span class="sr-only">YouTube</span>
+                </a>
+                <a href="https://x.com/Dr_hout" target="_blank" rel="noopener noreferrer" class="transition-transform duration-300 hover:scale-125">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.292-2.179 0.605-7.165-9.366-4.753 6.614 1.324 0.58h-3.27l7.347-9.487-8.856-11.724 2.182-0.605 7.02 9.169 4.754-6.524-1.327-0.58z"/>
+                    </svg>
+                    <span class="sr-only">X</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-6 fade-in">
+        <p id="footerText">© 2024 Mostafa Emad Salah Hamdy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let isEnglish = true;
+        let isDarkMode = false;
+
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all elements with scroll-animate class
+        document.querySelectorAll('.scroll-animate').forEach((element) => {
+            observer.observe(element);
+        });
+
+        function calculateAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const monthDifference = today.getMonth() - birth.getMonth();
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        function setAge() {
+            const birthDate = new Date('2005-03-09');
+            const age = calculateAge(birthDate);
+            document.getElementById('ageValue').textContent = age;
+        }
+
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            updateContent();
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            updateTheme();
+        }
+
+        function updateTheme() {
+            const body = document.body;
+            if (isDarkMode) {
+                body.classList.remove('bg-cream', 'text-gray-800');
+                body.classList.add('bg-gray-900', 'text-gray-100', 'dark');
+                document.getElementById('darkModeToggle').textContent = '☀️';
+            } else {
+                body.classList.remove('bg-gray-900', 'text-gray-100', 'dark');
+                body.classList.add('bg-cream', 'text-gray-800');
+                document.getElementById('darkModeToggle').textContent = '🌙';
+            }
+        }
+
+        function updateContent() {
+            const langToggle = document.getElementById('langToggle');
+            langToggle.textContent = isEnglish ? 'عربي' : 'English';
+
+            document.getElementById('navTitle').textContent = isEnglish ? 'Dr Hout' : 'د. حوت';
+            document.getElementById('fullName').textContent = isEnglish ? 'Mostafa Emad Salah Hamdy' : 'مصطفى عماد صلاح حمدي';
+            document.getElementById('tagline').textContent = isEnglish ? 'Driven by a passion for programming and management, merging creativity with technology' : 'مدفوع بشغف البرمجة والإدارة، يمزج بين الإبداع والتكنولوجيا';
+            document.getElementById('personalInfoTitle').textContent = isEnglish ? 'Personal Information' : 'المعلومات الشخصية';
+            document.getElementById('ageLabel').textContent = isEnglish ? 'Age:' : 'العمر:';
+            document.getElementById('nationalityLabel').textContent = isEnglish ? 'Nationality:' : 'الجنسية:';
+            document.getElementById('nationalityValue').textContent = isEnglish ? 'Egyptian' : 'مصري';
+            document.getElementById('emailLabel').textContent = isEnglish ? 'Email:' : 'البريد الإلكتروني:';
+            document.getElementById('positionLabel').textContent = isEnglish ? 'Position:' : 'المنصب:';
+            document.getElementById('positionValue').textContent = isEnglish ? 'Head of Social Activities and Trips Committee 2024-2025, Faculty of Health Sciences Student Union' : 'رئيس لجنة الأنشطة الاجتماعية والرحلات 2024-2025، اتحاد طلاب كلية العلوم الصحية';
+            document.getElementById('skillsTitle').textContent = isEnglish ? 'Skills' : 'المهارات';
+            document.getElementById('certificatesTitle').textContent = isEnglish ? 'Qualifications and Certificates' : 'المؤهلات والشهادات';
+            document.getElementById('educationTitle').textContent = isEnglish ? 'Education' : 'التعليم';
+            document.getElementById('educationInfo').textContent = isEnglish ? 'Faculty of Health Sciences - Health Administration & Informatics' : 'كلية العلوم الصحية - إدارة الصحة والمعلوماتية';
+            document.getElementById('socialMediaTitle').textContent = isEnglish ? 'Social Media' : 'وسائل التواصل الاجتماعي';
+            document.getElementById('footerText').textContent = isEnglish ? '© 2024 Mostafa Emad Salah Hamdy. All rights reserved.' : '© 2024 مصطفى عماد صلاح حمدي. جميع الحقوق محفوظة.';
+
+            updateSkills();
+            updateCertificates();
+
+            document.dir = isEnglish ? 'ltr' : 'rtl';
+        }
+
+        function updateSkills() {
+            const skills = ['Python', 'Data Science', 'Digital Marketing', 'Health Administration'];
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = '';
+            skills.forEach((skill, index) => {
+                const span = document.createElement('span');
+                span.className = 'px-4 py-2 bg-royal-blue text-white rounded-full text-sm skill-tag';
+                span.style.animationDelay = `${index * 0.1}s`;
+                span.textContent = skill;
+                skillsList.appendChild(span);
+            });
+        }
+
+        function updateCertificates() {
+            const certificates = [
+                {en: 'Digital Marketing: Misr University for Science and Technology (MUST), 2024', ar: 'التسويق الرقمي: جامعة مصر للعلوم والتكنولوجيا (MUST)، 2024'},
+                {en: 'Data Science: Completion Certificate from Moka Satar', ar: 'علوم البيانات: شهادة إتمام من موكا سطر'},
+                {en: 'Python 101: Completion Certificate from Moka Satar', ar: 'بايثون 101: شهادة إتمام من موكا سطر'},
+                {en: 'Certificate of Appreciation from Entrepreneurship Committee, MUST University, for distinguished efforts and innovative solutions during hackathon activities held on February 9-11, 2025', ar: 'شهادة تقدير من لجنة ريادة الأعمال، جامعة مصر للعلوم والتكنولوجيا، للجهود المتميزة والحلول المبتكرة خلال أنشطة الهاكاثون المنعقدة في 9-11 فبراير 2025'},
+                {en: 'ISO 45001/2018: Occupational Safety and Health Management System', ar: 'ISO 45001/2018: نظام إدارة السلامة والصحة المهنية'},
+                {en: 'Infection Control and Prevention: Public Health Academy in Waqaya, December 18, 2024', ar: 'مكافحة العدوى والوقاية منها: أكاديمية الصحة العامة في وقاية، 18 ديسمبر 2024'},
+                {en: 'Body Language & Business Etiquette: Almentor platform', ar: 'لغة الجسد وآداب العمل: منصة المنتور'},
+                {en: 'Attendance Certificate at Third International Biotechnology Conference, Mast University', ar: 'شهادة حضور المؤتمر الدولي الثالث للتكنولوجيا الحيوية، جامعة ماست'}
+            ];
+            const certificatesList = document.getElementById('certificatesList');
+            certificatesList.innerHTML = '';
+            certificatesList.className = 'max-w-2xl mx-auto space-y-4 list-disc list-inside';
+            certificates.forEach((cert, index) => {
+                const li = document.createElement('li');
+                li.textContent = (isEnglish ? cert.en : cert.ar);
+                li.className = 'mb-2 scale-on-hover';
+                li.style.animationDelay = `${index * 0.1}s`;
+                certificatesList.appendChild(li);
+            });
+        }
+
+        // Initial setup
+        setAge();
+        updateContent();
+        updateTheme();
+    </script>
+</body>
+</html>
+
