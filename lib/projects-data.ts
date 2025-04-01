@@ -59,36 +59,69 @@ const sampleProjects: Project[] = [
 export function ensureDataDirectory() {
   const dataDir = path.join(process.cwd(), "data")
   if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true })
+    try {
+      fs.mkdirSync(dataDir, { recursive: true })
+    } catch (error) {
+      console.error("Error creating data directory:", error)
+      // Fallback to using /tmp directory in production environments
+      if (process.env.NODE_ENV === "production") {
+        return path.join("/tmp")
+      }
+      throw error
+    }
   }
+  return dataDir
+}
+
+// Get the appropriate data file path
+export function getDataFilePath() {
+  const dataDir = ensureDataDirectory()
+  // In production (Vercel), use /tmp directory which is writable
+  if (process.env.NODE_ENV === "production") {
+    return path.join("/tmp", "projects.json")
+  }
+  return path.join(dataDir, "projects.json")
 }
 
 // Initialize the projects file with sample data if it doesn't exist
 export function initializeProjectsFile() {
-  ensureDataDirectory()
+  const filePath = getDataFilePath()
 
-  if (!fs.existsSync(dataFilePath)) {
-    fs.writeFileSync(dataFilePath, JSON.stringify({ projects: sampleProjects }, null, 2))
+  if (!fs.existsSync(filePath)) {
+    try {
+      fs.writeFileSync(filePath, JSON.stringify({ projects: sampleProjects }, null, 2))
+    } catch (error) {
+      console.error("Error writing to projects file:", error)
+      // If we can't write to the file, return the sample projects
+      return sampleProjects
+    }
   }
+  return null
 }
 
 // Get all projects
 export function getProjects(): Project[] {
   try {
     initializeProjectsFile()
-    const data = fs.readFileSync(dataFilePath, "utf8")
+    const filePath = getDataFilePath()
+
+    if (!fs.existsSync(filePath)) {
+      return sampleProjects
+    }
+
+    const data = fs.readFileSync(filePath, "utf8")
     return JSON.parse(data).projects
   } catch (error) {
     console.error("Error reading projects file:", error)
-    return []
+    return sampleProjects
   }
 }
 
 // Save all projects
 export function saveProjects(projects: Project[]) {
   try {
-    ensureDataDirectory()
-    fs.writeFileSync(dataFilePath, JSON.stringify({ projects }, null, 2))
+    const filePath = getDataFilePath()
+    fs.writeFileSync(filePath, JSON.stringify({ projects }, null, 2))
     return true
   } catch (error) {
     console.error("Error saving projects file:", error)
