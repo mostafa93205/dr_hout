@@ -169,4 +169,3 @@ export function getProjectById(id: string): Project | null {
   const projects = getProjects()
   return projects.find((p) => p.id === id) || null
 }
-

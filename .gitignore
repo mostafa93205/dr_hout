@@ -39,4 +39,3 @@ next-env.d.ts
 # data directory (except .gitkeep)
 /data/*
 !/data/.gitkeep
-

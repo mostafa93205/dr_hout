@@ -370,7 +370,7 @@ export default function ProjectManagement() {
                   </div>
 
                   <div className="grid gap-2">
-                    <Label htmlFor="status">{isEnglish ? "Status" : "الحالة"}</Label>
+                    <Label htmlFor="status">{isEnglish ? "Status" : "الحا��ة"}</Label>
                     <Select
                       value={newProject.status}
                       onValueChange={(value: "planning" | "in-progress" | "completed" | "on-hold") =>
@@ -755,4 +755,3 @@ export default function ProjectManagement() {
     </div>
   )
 }
-
