@@ -13,6 +13,8 @@ type AnimationType =
   | "flip"
   | "slide-up"
   | "slide-down"
+  | "rotate-in"
+  | "bounce-in"
 
 interface ScrollRevealProps {
   children: ReactNode
@@ -89,11 +91,15 @@ export function ScrollReveal({
           return { transform: `translateY(${distance})` }
         case "slide-down":
           return { transform: `translateY(-${distance})` }
+        case "rotate-in":
+          return { opacity: 0, transform: "rotate(-10deg)" }
+        case "bounce-in":
+          return { opacity: 0, transform: "scale(0.3)" }
         default:
           return { opacity: 0 }
       }
     }
-    return { opacity: 1, transform: "translateY(0) translateX(0) scale(1) rotateY(0)" }
+    return { opacity: 1, transform: "translateY(0) translateX(0) scale(1) rotateY(0) rotate(0)" }
   }
 
   return (
@@ -105,7 +111,8 @@ export function ScrollReveal({
         transitionDuration: `${duration}ms`,
         transitionDelay: `${delay}ms`,
         transitionProperty: "opacity, transform",
-        transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+        transitionTimingFunction:
+          animation === "bounce-in" ? "cubic-bezier(0.175, 0.885, 0.32, 1.275)" : "cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
       {children}

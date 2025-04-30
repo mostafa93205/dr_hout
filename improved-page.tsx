@@ -24,7 +24,7 @@ export default function PersonalPage() {
       return age
     }
 
-    const birthDate = new Date("2005-03-09")
+    const birthDate = new Date("2005-03-05")
     setAge(calculateAge(birthDate))
 
     // Set up intersection observer for scroll animations
@@ -54,7 +54,16 @@ export default function PersonalPage() {
     setIsDarkMode(!isDarkMode)
   }
 
-  const skills = ["Python", "Data Science", "Digital Marketing", "Health Administration"]
+  const skills = [
+    { name: "Python", icon: "🐍", level: 90 },
+    { name: "Data Science", icon: "📊", level: 85 },
+    { name: "Digital Marketing", icon: "📱", level: 80 },
+    { name: "Health Administration", icon: "🏥", level: 95 },
+    { name: "Web Development", icon: "💻", level: 75 },
+    { name: "AI Integration", icon: "🤖", level: 70 },
+    { name: "Adobe Photoshop", icon: "🎨", level: 85 },
+    { name: "Video Editing", icon: "🎬", level: 80 },
+  ]
 
   const certificates = [
     {
@@ -120,8 +129,8 @@ export default function PersonalPage() {
           </h1>
           <p className="text-xl mb-8 fade-in fade-in-delay-1 max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
             {isEnglish
-              ? "Driven by a passion for programming and management, merging creativity with technology"
-              : "مدفوع بشغف البرمجة والإدارة، يمزج بين الإبداع والتكنولوجيا"}
+              ? "I am a dedicated Health Administration & Informatics student with a strong passion for leveraging programming and digital solutions to improve healthcare systems. My expertise spans data analysis, digital marketing, Python development, and health system management."
+              : "أنا طالب متخصص في إدارة الصحة والمعلوماتية مع شغف قوي بتسخير البرمجة والحلول الرقمية لتحسين أنظمة الرعاية الصحية. تمتد خبرتي لتشمل تحليل البيانات والتسويق الرقمي وتطوير بايثون وإدارة النظم الصحية."}
           </p>
           <ChevronDown className="mx-auto animate-bounce fade-in fade-in-delay-2 text-primary" />
         </div>
@@ -184,13 +193,8 @@ export default function PersonalPage() {
                 className="bg-gradient-to-br from-primary/80 to-primary p-6 rounded-xl text-white text-center shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="text-5xl mb-4 opacity-80">
-                  {index === 0 && "🐍"}
-                  {index === 1 && "📊"}
-                  {index === 2 && "📱"}
-                  {index === 3 && "🏥"}
-                </div>
-                <h3 className="text-xl font-bold">{skill}</h3>
+                <div className="text-5xl mb-4 opacity-80">{skill.icon}</div>
+                <h3 className="text-xl font-bold">{skill.name}</h3>
               </div>
             ))}
           </div>
@@ -226,6 +230,29 @@ export default function PersonalPage() {
               <p className="text-lg text-gray-600 dark:text-gray-300">
                 {isEnglish ? "Health Administration & Informatics" : "إدارة الصحة والمعلوماتية"}
               </p>
+            </Card>
+          </div>
+        </section>
+
+        {/* Languages */}
+        <section className="scroll-animate">
+          <h2 className="text-3xl font-bold mb-10 text-center text-primary">{isEnglish ? "Languages" : "اللغات"}</h2>
+          <div className="max-w-3xl mx-auto">
+            <Card className="p-8 text-center bg-white/80 dark:bg-gray-800/50 shadow-xl">
+              <div className="grid grid-cols-2 gap-8">
+                <div className="flex flex-col items-center">
+                  <div className="text-4xl mb-4">🇪🇬</div>
+                  <h3 className="text-xl font-bold mb-2">{isEnglish ? "Arabic" : "العربية"}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">{isEnglish ? "Native" : "اللغة الأم"}</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="text-4xl mb-4">🇬🇧</div>
+                  <h3 className="text-xl font-bold mb-2">{isEnglish ? "English" : "الإنجليزية"}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {isEnglish ? "Intermediate (Actively improving)" : "متوسط (تحسين نشط)"}
+                  </p>
+                </div>
+              </div>
             </Card>
           </div>
         </section>
@@ -274,6 +301,28 @@ export default function PersonalPage() {
                   <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">SQL</span>
                   <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">Python</span>
                   <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">Django</span>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="overflow-hidden group hover:shadow-xl transition-all duration-300">
+              <div className="h-48 bg-gradient-to-r from-primary/80 to-primary flex items-center justify-center">
+                <div className="text-6xl text-white">🏥</div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                  {isEnglish ? "Hospital Management System with AI" : "نظام إدارة المستشفيات مع الذكاء الاصطناعي"}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  {isEnglish
+                    ? "Flask-based app with patient records, appointments, billing, and an AI-powered congestion prediction system."
+                    : "تطبيق قائم على Flask مع سجلات المرضى والمواعيد والفواتير ونظام تنبؤ بالازدحام مدعوم بالذكاء الاصطناعي."}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">Python</span>
+                  <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">Flask</span>
+                  <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">AI</span>
+                  <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs">SQL</span>
                 </div>
               </div>
             </Card>

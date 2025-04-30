@@ -76,16 +76,6 @@ export function MobileNav({ isEnglish, activeSection, scrollToSection }: MobileN
             {isEnglish ? "Education" : "التعليم"}
           </button>
           <button
-            onClick={() => handleNavClick("projects")}
-            className={`text-left px-2 py-2 rounded-md transition-colors ${
-              activeSection === "projects"
-                ? "bg-primary/10 text-primary font-medium"
-                : "hover:bg-gray-100 dark:hover:bg-gray-800"
-            }`}
-          >
-            {isEnglish ? "Projects" : "المشاريع"}
-          </button>
-          <button
             onClick={() => handleNavClick("contact")}
             className={`text-left px-2 py-2 rounded-md transition-colors ${
               activeSection === "contact"

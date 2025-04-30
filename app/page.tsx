@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react"
 import {
   ChevronDown,
-  LayoutDashboard,
-  Lock,
   Mail,
   MapPin,
   Phone,
@@ -13,16 +11,10 @@ import {
   ArrowRight,
   ChevronUp,
   Loader2,
-  Play,
-  FileText,
-  LinkIcon,
-  Presentation,
+  Globe,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Card } from "@/components/ui/card"
 import { useProjectStore } from "@/lib/project-store"
 import { RotatingText } from "@/components/effects/rotating-text"
 import { BlurText } from "@/components/effects/blur-text"
@@ -79,6 +71,7 @@ export default function PersonalPage() {
     },
   ])
   const [selectedPresentation, setSelectedPresentation] = useState(null)
+  const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 })
 
   useEffect(() => {
     setIsMounted(true)
@@ -98,7 +91,7 @@ export default function PersonalPage() {
       return age
     }
 
-    const birthDate = new Date("2005-03-09")
+    const birthDate = new Date("2005-03-05")
     setAge(calculateAge(birthDate))
 
     // Set up intersection observer for scroll animations
@@ -131,11 +124,30 @@ export default function PersonalPage() {
       setIsScrolled(window.scrollY > 50)
     }
 
+    const handleParallax = () => {
+      const scrolled = window.scrollY
+      const parallaxElements = document.querySelectorAll(".parallax")
+      parallaxElements.forEach((el) => {
+        const speed = el.getAttribute("data-speed") || 0.2
+        const yPos = -(scrolled * speed)
+        el.style.transform = `translateY(${yPos}px)`
+      })
+    }
+
     window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleParallax)
+
+    const handleMouseMove = (e) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY })
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
 
     return () => {
       observer.disconnect()
       window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("scroll", handleParallax)
+      window.removeEventListener("mousemove", handleMouseMove)
     }
   }, [fetchProjects])
 
@@ -159,6 +171,10 @@ export default function PersonalPage() {
     { name: "Data Science", icon: "📊", level: 85 },
     { name: "Digital Marketing", icon: "📱", level: 80 },
     { name: "Health Administration", icon: "🏥", level: 95 },
+    { name: "Web Development", icon: "💻", level: 75 },
+    { name: "AI Integration", icon: "🤖", level: 70 },
+    { name: "Adobe Photoshop", icon: "🎨", level: 85 },
+    { name: "Video Editing", icon: "🎬", level: 80 },
   ]
 
   const certificates = [
@@ -286,12 +302,6 @@ export default function PersonalPage() {
               {isEnglish ? "Education" : "التعليم"}
             </button>
             <button
-              onClick={() => scrollToSection("projects")}
-              className={`text-sm font-medium hover:text-primary transition-colors ${activeSection === "projects" ? "text-primary" : ""}`}
-            >
-              {isEnglish ? "Projects" : "المشاريع"}
-            </button>
-            <button
               onClick={() => scrollToSection("contact")}
               className={`text-sm font-medium hover:text-primary transition-colors ${activeSection === "contact" ? "text-primary" : ""}`}
             >
@@ -300,12 +310,6 @@ export default function PersonalPage() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Link href="/admin">
-              <Button variant="outline" size="sm" className="gap-2">
-                <LayoutDashboard className="h-4 w-4" />
-                {isEnglish ? "Admin" : "الإدارة"}
-              </Button>
-            </Link>
             <LanguageToggle isEnglish={isEnglish} toggleLanguage={toggleLanguage} />
             <ThemeToggle isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
 
@@ -314,8 +318,15 @@ export default function PersonalPage() {
           </div>
         </div>
       </nav>
-      <header id="home" className="pt-32 pb-16 text-center">
-        <div className="container mx-auto px-6">
+      <header id="home" className="pt-32 pb-16 text-center relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-20 left-1/4 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+          <div className="absolute top-40 right-1/4 w-72 h-72 bg-purple-300/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-blue-300/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="container mx-auto px-6 relative">
           <ScrollReveal animation="fade-down" duration={1000}>
             <div className="relative w-40 h-40 mx-auto mb-8">
               <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/60 rounded-full blur-xl opacity-20 animate-pulse"></div>
@@ -371,10 +382,6 @@ export default function PersonalPage() {
                   <Download className="h-4 w-4" />
                 </Button>
               </a>
-              <Button variant="secondary" onClick={() => setIsPresentationOpen(true)} className="gap-2">
-                {isEnglish ? "View Presentation" : "عرض التقديمي"}
-                <Play className="h-4 w-4" />
-              </Button>
             </div>
           </ScrollReveal>
 
@@ -454,8 +461,8 @@ export default function PersonalPage() {
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {isEnglish
-                      ? "I am a dedicated Health Administration & Informatics student with a passion for leveraging technology to improve healthcare systems. My expertise spans data analysis, digital marketing, and project management."
-                      : "أنا طالب متخصص في إدارة الصحة والمعلوماتية مع شغف بتسخير التكنولوجيا لتحسين أنظمة الرعاية الصحية. تمتد خبرتي لتشمل تحليل البيانات والتسويق الرقمي وإدارة المشاريع."}
+                      ? "I am a dedicated Health Administration & Informatics student with a strong passion for leveraging programming and digital solutions to improve healthcare systems. My expertise spans data analysis, digital marketing, Python development, and health system management."
+                      : "أنا طالب متخصص في إدارة الصحة والمعلوماتية مع شغف قوي بتسخير البرمجة والحلول الرقمية لتحسين أنظمة الرعاية الصحية. تمتد خبرتي لتشمل تحليل البيانات والتسويق الرقمي وتطوير بايثون وإدارة النظم الصحية."}
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">
                     {isEnglish
@@ -477,17 +484,19 @@ export default function PersonalPage() {
               <div className="space-y-6">
                 {skills.slice(0, 2).map((skill, index) => (
                   <ScrollReveal key={index} animation="fade-right" duration={800} delay={index * 200}>
-                    <div className="space-y-2">
+                    <div className="space-y-2 group">
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                          <span className="text-2xl">{skill.icon}</span>
+                          <span className="text-2xl transform transition-transform duration-300 group-hover:scale-125">
+                            {skill.icon}
+                          </span>
                           <h3 className="font-medium">{skill.name}</h3>
                         </div>
                         <span className="text-sm text-gray-500 dark:text-gray-400">{skill.level}%</span>
                       </div>
-                      <div className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors">
                         <div
-                          className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
+                          className="h-full bg-primary rounded-full transition-all duration-1000 ease-out group-hover:bg-primary/80"
                           style={{ width: `${skill.level}%`, transitionDelay: `${index * 0.2}s` }}
                         ></div>
                       </div>
@@ -499,17 +508,19 @@ export default function PersonalPage() {
               <div className="space-y-6">
                 {skills.slice(2, 4).map((skill, index) => (
                   <ScrollReveal key={index} animation="fade-left" duration={800} delay={(index + 2) * 200}>
-                    <div className="space-y-2">
+                    <div className="space-y-2 group">
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                          <span className="text-2xl">{skill.icon}</span>
+                          <span className="text-2xl transform transition-transform duration-300 group-hover:scale-125">
+                            {skill.icon}
+                          </span>
                           <h3 className="font-medium">{skill.name}</h3>
                         </div>
                         <span className="text-sm text-gray-500 dark:text-gray-400">{skill.level}%</span>
                       </div>
-                      <div className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors">
                         <div
-                          className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
+                          className="h-full bg-primary rounded-full transition-all duration-1000 ease-out group-hover:bg-primary/80"
                           style={{ width: `${skill.level}%`, transitionDelay: `${(index + 2) * 0.2}s` }}
                         ></div>
                       </div>
@@ -599,6 +610,31 @@ export default function PersonalPage() {
           </ScrollReveal>
         </section>
 
+        {/* Languages */}
+        <section>
+          <ScrollReveal animation="fade-up" duration={1000}>
+            <h2 className="text-3xl font-bold mb-10 text-center text-primary">{isEnglish ? "Languages" : "اللغات"}</h2>
+            <div className="max-w-3xl mx-auto">
+              <Card className="p-8 text-center bg-white/80 dark:bg-gray-800/50 shadow-xl">
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="flex flex-col items-center">
+                    <div className="text-4xl mb-4">🇪🇬</div>
+                    <h3 className="text-xl font-bold mb-2">{isEnglish ? "Arabic" : "العربية"}</h3>
+                    <p className="text-gray-600 dark:text-gray-300">{isEnglish ? "Native" : "اللغة الأم"}</p>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="text-4xl mb-4">🇬🇧</div>
+                    <h3 className="text-xl font-bold mb-2">{isEnglish ? "English" : "الإنجليزية"}</h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      {isEnglish ? "Intermediate (Actively improving)" : "متوسط (تحسين نشط)"}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </ScrollReveal>
+        </section>
+
         <section>
           <ScrollReveal animation="fade-up" duration={1000}>
             <h2 className="text-3xl font-bold mb-10 text-center text-primary">
@@ -677,206 +713,6 @@ export default function PersonalPage() {
           </ScrollReveal>
         </section>
 
-        {/* Projects Section */}
-        <section id="projects">
-          <ScrollReveal animation="fade-up" duration={1000}>
-            <h2 className="text-3xl font-bold mb-10 text-center text-primary">
-              {isEnglish ? "Projects & Work" : "المشاريع والأعمال"}
-            </h2>
-
-            {/* Loading and error states */}
-            {loading && (
-              <div className="flex justify-center items-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                <span className="ml-2">{isEnglish ? "Loading projects..." : "جاري تحميل المشاريع..."}</span>
-              </div>
-            )}
-
-            {error && (
-              <Alert variant="destructive" className="mb-6 max-w-4xl mx-auto">
-                <AlertTitle>{isEnglish ? "Error" : "خطأ"}</AlertTitle>
-                <AlertDescription>
-                  {isEnglish ? `Failed to load projects: ${error}` : `فشل في تحميل المشاريع: ${error}`}
-                  <Button variant="outline" size="sm" className="ml-4" onClick={() => fetchProjects()}>
-                    {isEnglish ? "Retry" : "إعادة المحاولة"}
-                  </Button>
-                </AlertDescription>
-              </Alert>
-            )}
-
-            {!loading && !error && (
-              <>
-                {mappedProjects.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-                    {mappedProjects.map((project, index) => (
-                      <ScrollReveal
-                        key={index}
-                        animation={index % 2 === 0 ? "fade-right" : "fade-left"}
-                        duration={800}
-                        delay={index * 200}
-                      >
-                        <Card className="overflow-hidden group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2">
-                          {project.imageUrl ? (
-                            <div className="h-48 overflow-hidden">
-                              <img
-                                src={project.imageUrl || "/placeholder.svg"}
-                                alt={isEnglish ? project.title.en : project.title.ar}
-                                className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
-                              />
-                            </div>
-                          ) : (
-                            <div className={`h-48 bg-gradient-to-r ${project.color} flex items-center justify-center`}>
-                              <div className="text-6xl text-white group-hover:scale-110 transition-transform duration-300">
-                                {project.icon}
-                              </div>
-                            </div>
-                          )}
-                          <div className="p-6">
-                            <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                              {isEnglish ? project.title.en : project.title.ar}
-                            </h3>
-                            <p className="text-gray-600 dark:text-gray-300 mb-4">
-                              {isEnglish ? project.description.en : project.description.ar}
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                              {project.technologies.map((tech, techIndex) => (
-                                <Badge
-                                  key={techIndex}
-                                  variant="outline"
-                                  className="bg-primary/5 text-primary border-primary/20"
-                                >
-                                  {tech}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        </Card>
-                      </ScrollReveal>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-12 max-w-4xl mx-auto">
-                    <p className="text-gray-500 dark:text-gray-400">
-                      {isEnglish
-                        ? "No projects found. Add projects in the Project Management section."
-                        : "لم يتم العثور على مشاريع. أضف مشاريع في قسم إدارة المشاريع."}
-                    </p>
-                  </div>
-                )}
-              </>
-            )}
-
-            {/* Project Management Button */}
-            <ScrollReveal animation="fade-up" duration={1000} delay={400}>
-              <div className="flex justify-center mt-10">
-                <Card className="p-8 text-center bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-500 max-w-md">
-                  <div className="text-6xl mb-6 text-primary">🔐</div>
-                  <h3 className="text-2xl font-bold mb-4">{isEnglish ? "Project Management" : "إدارة المشاريع"}</h3>
-                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                    {isEnglish
-                      ? "Access the secure project management dashboard to add, edit, and manage all your projects."
-                      : "الوصول إلى لوحة تحكم إدارة المشاريع الآمنة لإضافة وتعديل وإدارة جميع مشاريعك."}
-                  </p>
-                  <Link href="/project-management">
-                    <Button size="lg" className="gap-2 group">
-                      <Lock className="h-5 w-5 group-hover:rotate-12 transition-transform" />
-                      {isEnglish ? "Secure Project Dashboard" : "لوحة المشاريع الآمنة"}
-                    </Button>
-                  </Link>
-                </Card>
-              </div>
-            </ScrollReveal>
-          </ScrollReveal>
-        </section>
-
-        {/* Presentations Section */}
-        <section id="presentations">
-          <ScrollReveal animation="fade-up" duration={1000}>
-            <h2 className="text-3xl font-bold mb-10 text-center text-primary">
-              {isEnglish ? "Presentations" : "العروض التقديمية"}
-            </h2>
-
-            {/* Loading and error states */}
-            {loading && (
-              <div className="flex justify-center items-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                <span className="ml-2">
-                  {isEnglish ? "Loading presentations..." : "جاري تحميل العروض التقديمية..."}
-                </span>
-              </div>
-            )}
-
-            {/* Presentations grid */}
-            {presentations.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                {presentations.slice(0, 3).map((presentation) => (
-                  <Card
-                    key={presentation.id}
-                    className="overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer"
-                    onClick={() => openPresentation(presentation)}
-                  >
-                    <div className="h-40 bg-gray-100 dark:bg-gray-800 relative">
-                      {presentation.thumbnailUrl ? (
-                        <img
-                          src={presentation.thumbnailUrl || "/placeholder.svg"}
-                          alt={isEnglish ? presentation.title.en : presentation.title.ar}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          {presentation.type === "slides" ? (
-                            <Presentation className="h-16 w-16 text-gray-300 dark:text-gray-600" />
-                          ) : presentation.type === "pdf" ? (
-                            <FileText className="h-16 w-16 text-gray-300 dark:text-gray-600" />
-                          ) : (
-                            <LinkIcon className="h-16 w-16 text-gray-300 dark:text-gray-600" />
-                          )}
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <Button variant="secondary" size="sm" className="gap-2">
-                          <Play className="h-4 w-4" />
-                          {isEnglish ? "View" : "عرض"}
-                        </Button>
-                      </div>
-                      <Badge className="absolute top-2 right-2" variant="secondary">
-                        {presentation.type === "slides"
-                          ? isEnglish
-                            ? "Slides"
-                            : "شرائح"
-                          : presentation.type === "pdf"
-                            ? "PDF"
-                            : isEnglish
-                              ? "External Link"
-                              : "رابط خارجي"}
-                      </Badge>
-                    </div>
-
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-lg line-clamp-1">
-                        {isEnglish ? presentation.title.en : presentation.title.ar}
-                      </CardTitle>
-                      <CardDescription className="line-clamp-2">
-                        {isEnglish ? presentation.description?.en : presentation.description?.ar}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12 max-w-4xl mx-auto">
-                <p className="text-gray-500 dark:text-gray-400">
-                  {isEnglish
-                    ? "No presentations found. Add presentations in the Presentation Management section."
-                    : "لم يتم العثور على عروض تقديمية. أضف عروضًا في قسم إدارة العروض التقديمية."}
-                </p>
-              </div>
-            )}
-
-            {/* No View All Button */}
-          </ScrollReveal>
-        </section>
-
         {/* Contact Section */}
         <section id="contact">
           <ScrollReveal animation="fade-up" duration={1000}>
@@ -922,8 +758,25 @@ export default function PersonalPage() {
                           <div>
                             <h4 className="font-medium">{isEnglish ? "Location" : "الموقع"}</h4>
                             <p className="text-gray-600 dark:text-gray-300 mt-1">
-                              {isEnglish ? "Cairo, Egypt" : "القاهرة، مصر"}
+                              {isEnglish ? "Giza, Egypt" : "الجيزة، مصر"}
                             </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-4">
+                          <div className="bg-primary/10 p-3 rounded-full mt-1">
+                            <Globe className="h-5 w-5 text-primary" />
+                          </div>
+                          <div>
+                            <h4 className="font-medium">{isEnglish ? "Portfolio" : "الموقع الشخصي"}</h4>
+                            <a
+                              href="https://dr-hout.vercel.app"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline"
+                            >
+                              dr-hout.vercel.app
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -941,8 +794,8 @@ export default function PersonalPage() {
                         {isEnglish ? "Send Me a Message" : "أرسل لي رسالة"}
                       </h3>
 
-                      <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-6 text-center">
-                        <div className="text-6xl mb-4 mx-auto">💬</div>
+                      <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-6 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        <div className="text-6xl mb-4 mx-auto animate-bounce-slow">💬</div>
                         <h4 className="text-lg font-medium mb-3">
                           {isEnglish ? "I prefer WhatsApp messages" : "أفضل الرسائل عبر واتساب"}
                         </h4>
@@ -958,12 +811,12 @@ export default function PersonalPage() {
                           rel="noopener noreferrer"
                           className="inline-block"
                         >
-                          <Button size="lg" className="gap-2">
+                          <Button size="lg" className="gap-2 group">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
                               fill="currentColor"
-                              className="w-5 h-5"
+                              className="w-5 h-5 group-hover:animate-wiggle"
                             >
                               <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-.1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.72.045.419-.1.824z" />
                             </svg>
@@ -998,10 +851,10 @@ export default function PersonalPage() {
       {/* Back to top button */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-6 right-6 p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-all duration-300 opacity-80 hover:opacity-100"
+        className="fixed bottom-6 right-6 p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-all duration-300 opacity-80 hover:opacity-100 hover:scale-110"
         aria-label={isEnglish ? "Back to top" : "العودة إلى الأعلى"}
       >
-        <ChevronUp className="h-5 w-5" />
+        <ChevronUp className="h-5 w-5 animate-pulse" />
       </button>
       {/* Presentation Screen */}
       <PresentationScreen
@@ -1016,6 +869,13 @@ export default function PersonalPage() {
         isEnglish={isEnglish}
         presentation={selectedPresentation}
       />
+      <div
+        className="custom-cursor hidden md:block"
+        style={{
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
+        }}
+      ></div>
       {/* CSS for animations */}
       <style jsx global>{`
         .animate-float {
@@ -1023,7 +883,8 @@ export default function PersonalPage() {
         }
 
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {
@@ -1032,7 +893,8 @@ export default function PersonalPage() {
         }
 
         @keyframes blink {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 1;
           }
           50% {
@@ -1042,6 +904,77 @@ export default function PersonalPage() {
 
         .animate-blink {
           animation: blink 1s step-end infinite;
+        }
+
+        .custom-cursor {
+          position: fixed;
+          width: 40px;
+          height: 40px;
+          border: 2px solid var(--primary);
+          border-radius: 50%;
+          pointer-events: none;
+          transform: translate(-50%, -50%);
+          z-index: 9999;
+          transition: transform 0.1s ease;
+          opacity: 0.6;
+        }
+
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+        }
+
+        .animate-bounce-slow {
+          animation: bounce 3s infinite;
+        }
+
+        @keyframes bounce {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        @keyframes wiggle {
+          0%,
+          100% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(10deg);
+          }
+          75% {
+            transform: rotate(-10deg);
+          }
+        }
+
+        .group-hover\\:animate-wiggle:hover {
+          animation: wiggle 1s ease-in-out;
         }
       `}</style>
     </div>
