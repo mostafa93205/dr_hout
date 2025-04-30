@@ -1,83 +1,79 @@
 import { create } from "zustand"
 
-// Project type definition
-export type Project = {
+export interface Project {
   id: string
   title: string
   description: string
-  category: string
-  status: "planning" | "in-progress" | "completed" | "on-hold"
-  technologies: string[]
-  startDate: string
-  endDate?: string
-  team?: string[]
   imageUrl?: string
+  tags: string[]
+  link?: string
+  featured: boolean
+  createdAt: string
 }
 
-// Define the store type
-interface ProjectStore {
+interface ProjectState {
   projects: Project[]
-  loading: boolean
+  isLoading: boolean
   error: string | null
   fetchProjects: () => Promise<void>
-  addProject: (project: Omit<Project, "id">) => Promise<void>
-  updateProject: (project: Project) => Promise<void>
+  addProject: (project: Omit<Project, "id" | "createdAt">) => Promise<void>
+  updateProject: (id: string, project: Partial<Project>) => Promise<void>
   deleteProject: (id: string) => Promise<void>
-  uploadImage: (id: string, imageUrl: string) => Promise<void>
+  toggleFeatured: (id: string) => Promise<void>
 }
 
-// Create the store
-export const useProjectStore = create<ProjectStore>((set, get) => ({
+export const useProjectStore = create<ProjectState>((set, get) => ({
   projects: [],
-  loading: false,
+  isLoading: false,
   error: null,
 
   fetchProjects: async () => {
-    set({ loading: true, error: null })
+    set({ isLoading: true, error: null })
     try {
       const response = await fetch("/api/projects")
       if (!response.ok) {
         throw new Error("Failed to fetch projects")
       }
       const data = await response.json()
-      set({ projects: data.projects, loading: false })
+      set({ projects: data, isLoading: false })
     } catch (error) {
-      console.error("Error fetching projects:", error)
-      set({ error: error instanceof Error ? error.message : "Unknown error", loading: false })
+      set({ error: (error as Error).message, isLoading: false })
     }
   },
 
   addProject: async (project) => {
-    set({ loading: true, error: null })
+    set({ isLoading: true, error: null })
     try {
       const response = await fetch("/api/projects", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(project),
+        body: JSON.stringify({
+          ...project,
+          createdAt: new Date().toISOString(),
+        }),
       })
 
       if (!response.ok) {
         throw new Error("Failed to add project")
       }
 
-      const data = await response.json()
+      const newProject = await response.json()
       set((state) => ({
-        projects: [...state.projects, data.project],
-        loading: false,
+        projects: [...state.projects, newProject],
+        isLoading: false,
       }))
     } catch (error) {
-      console.error("Error adding project:", error)
-      set({ error: error instanceof Error ? error.message : "Unknown error", loading: false })
+      set({ error: (error as Error).message, isLoading: false })
     }
   },
 
-  updateProject: async (project) => {
-    set({ loading: true, error: null })
+  updateProject: async (id, project) => {
+    set({ isLoading: true, error: null })
     try {
-      const response = await fetch(`/api/projects/${project.id}`, {
-        method: "PUT",
+      const response = await fetch(`/api/projects/${id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -88,18 +84,18 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
         throw new Error("Failed to update project")
       }
 
+      const updatedProject = await response.json()
       set((state) => ({
-        projects: state.projects.map((p) => (p.id === project.id ? project : p)),
-        loading: false,
+        projects: state.projects.map((p) => (p.id === id ? updatedProject : p)),
+        isLoading: false,
       }))
     } catch (error) {
-      console.error("Error updating project:", error)
-      set({ error: error instanceof Error ? error.message : "Unknown error", loading: false })
+      set({ error: (error as Error).message, isLoading: false })
     }
   },
 
   deleteProject: async (id) => {
-    set({ loading: true, error: null })
+    set({ isLoading: true, error: null })
     try {
       const response = await fetch(`/api/projects/${id}`, {
         method: "DELETE",
@@ -111,43 +107,17 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
 
       set((state) => ({
         projects: state.projects.filter((p) => p.id !== id),
-        loading: false,
+        isLoading: false,
       }))
     } catch (error) {
-      console.error("Error deleting project:", error)
-      set({ error: error instanceof Error ? error.message : "Unknown error", loading: false })
+      set({ error: (error as Error).message, isLoading: false })
     }
   },
 
-  uploadImage: async (id, imageUrl) => {
-    set({ loading: true, error: null })
-    try {
-      const project = get().projects.find((p) => p.id === id)
-      if (!project) {
-        throw new Error("Project not found")
-      }
+  toggleFeatured: async (id) => {
+    const project = get().projects.find((p) => p.id === id)
+    if (!project) return
 
-      const updatedProject = { ...project, imageUrl }
-
-      const response = await fetch(`/api/projects/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProject),
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to update project image")
-      }
-
-      set((state) => ({
-        projects: state.projects.map((p) => (p.id === id ? { ...p, imageUrl } : p)),
-        loading: false,
-      }))
-    } catch (error) {
-      console.error("Error uploading image:", error)
-      set({ error: error instanceof Error ? error.message : "Unknown error", loading: false })
-    }
+    await get().updateProject(id, { featured: !project.featured })
   },
 }))
